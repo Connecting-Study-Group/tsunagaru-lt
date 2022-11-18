@@ -7,7 +7,7 @@ import { Spacer } from "@/components/system/Spacer";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 
-const Home: NextPage = () => {
+const Top: NextPage = () => {
   const { user } = useAuth();
   return (
     <Layout>
@@ -54,13 +54,13 @@ const Home: NextPage = () => {
             </Link>
           </Box>
         ) : (
-          <Link href="/ログイン" passHref>
-          <Text>ログイン画面へ</Text>
-        </Link>
+          <Link href="/login" passHref>
+            <Text>ログイン画面へ</Text>
+          </Link>
         )}
       </main>
     </Layout>
   );
 };
 
-export default Home;
+export default Top;
