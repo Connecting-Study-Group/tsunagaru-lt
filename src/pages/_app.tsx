@@ -1,27 +1,28 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import { MantineProvider } from '@mantine/core';
+import { SessionProvider } from "next-auth/react";
+import { MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
+import { useEffect } from "react";
 
-export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
-
+function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
+  useEffect(() => {
+    document.documentElement.style.visibility = "visible";
+  }, []);
   return (
-    <>
-      <Head>
-        <title>Page title</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-      </Head>
-
+    <SessionProvider session={pageProps?.session}>
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
         theme={{
-          /** Put your mantine theme override here */
-          colorScheme: 'light',
+          fontFamily:
+            '"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif',
         }}
       >
-        <Component {...pageProps} />
+        <NotificationsProvider>
+          <Component {...pageProps} />
+        </NotificationsProvider>
       </MantineProvider>
-    </>
+    </SessionProvider>
   );
 }
+
+export default MyApp;
