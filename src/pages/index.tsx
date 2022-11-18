@@ -35,7 +35,7 @@ const Home: NextPage = () => {
           「つながるLT」はつながる勉強会のコミュニティ内で使用できる資料共有サービスです。
         </Text>
         {/* 認証後ボタンを表示 */}
-        {user && (
+        {user ? (
           <Box
             sx={{
               display: "flex",
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
               marginTop: "32px",
             }}
           >
-            <Link href="/payment" passHref>
+            <Link href="/dashboard" passHref>
               <Button
                 component="a"
                 variant="gradient"
@@ -53,6 +53,10 @@ const Home: NextPage = () => {
               </Button>
             </Link>
           </Box>
+        ) : (
+          <Link href="/ログイン" passHref>
+          <Text>ログイン画面へ</Text>
+        </Link>
         )}
       </main>
     </Layout>
