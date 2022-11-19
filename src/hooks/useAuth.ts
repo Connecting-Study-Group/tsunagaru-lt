@@ -38,7 +38,7 @@ export const useAuth = () => {
             idToken,
             callbackUrl: `${
               process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-            }/payment`,
+            }/dashboard`,
           });
         })
         .catch((err) => console.error(err));
@@ -53,7 +53,7 @@ export const useAuth = () => {
     signOut({
       callbackUrl: `${
         process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-      }/signin`,
+      }/login`,
     });
   };
   useEffect(() => {
