@@ -1,28 +1,30 @@
 import { SessionProvider } from "next-auth/react";
-import { MantineProvider } from "@mantine/core";
-import { NotificationsProvider } from "@mantine/notifications";
 import { useEffect } from "react";
+import type { NextPage } from "next";
+import type { AppProps } from "next/app";
+import type { ReactElement, ReactNode } from "react";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function MyApp({
+  Component,
+  pageProps,
+}: AppPropsWithLayout): ReactNode {
   useEffect(() => {
     document.documentElement.style.visibility = "visible";
   }, []);
-  return (
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  return getLayout(
     <SessionProvider session={pageProps?.session}>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          fontFamily:
-            '"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif',
-        }}
-      >
-        <NotificationsProvider>
-          <Component {...pageProps} />
-        </NotificationsProvider>
-      </MantineProvider>
+      <Component {...pageProps} />
     </SessionProvider>
   );
 }
-
-export default MyApp;
