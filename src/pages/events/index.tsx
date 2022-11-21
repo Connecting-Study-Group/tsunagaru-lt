@@ -3,7 +3,7 @@ import { AxiosPromise } from "axios";
 import {
   EventCollectionRepository,
   EventCollectionResponse,
-} from "@/repository/eventCollectionRepository";
+} from "@/repository/eventRepository";
 import React, { ReactElement, useMemo } from "react";
 import { EventsPage } from "@/components/pages/EventsPage";
 import { Layout } from "@/components/template/Layout";

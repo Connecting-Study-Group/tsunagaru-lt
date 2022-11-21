@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { EventCollectionResponse } from "@/repository/eventCollectionRepository";
+import { EventCollectionResponse } from "@/repository/eventRepository";
 
 export default async function handler(
   req: NextApiRequest,

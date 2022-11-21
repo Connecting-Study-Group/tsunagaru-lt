@@ -1,4 +1,4 @@
-import { EventCollection } from "@/repository/eventCollectionRepository";
+import { EventCollection } from "@/repository/eventRepository";
 import React, { memo, useMemo } from "react";
 import { useCallback } from "react";
 import { PageTitle } from "../atoms/PageTitle";
@@ -73,7 +73,9 @@ export const EventsPage: React.FC<Props> = memo(
                             if (!document) return <></>;
                             return (
                               <React.Fragment key={userId}>
-                                <Link href={`/documents/${userId}`}>
+                                <Link
+                                  href={`/events/${eventId}/documents/${userId}`}
+                                >
                                   <div>
                                     <span>{document.emoji}</span>
                                     <span>{document.title}</span>
