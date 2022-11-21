@@ -1,10 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { EventCollectionResponse } from "@/repository/eventCollectionRepository";
 
 export default async function handler(
+  req: NextApiRequest,
   res: NextApiResponse<EventCollectionResponse>
 ) {
   const data: Record<string, any> = {};

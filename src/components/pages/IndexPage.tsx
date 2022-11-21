@@ -36,7 +36,7 @@ export const IndexPage = memo(() => {
             marginTop: "32px",
           }}
         >
-          <Link href="/dashboard" passHref>
+          <Link href="/events" passHref>
             <Button
               component="a"
               variant="gradient"
