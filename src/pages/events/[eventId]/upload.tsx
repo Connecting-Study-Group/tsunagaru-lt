@@ -1,4 +1,10 @@
-import { DocumentUploadPage } from "@/components/pages/DpcumentUploadPage";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosPromise } from "axios";
+import {
+  EventCollectionRepository,
+  EventCollectionResponse,
+} from "@/repository/eventRepository";
+import { DocumentUploadPage } from "@/components/pages/DocumentUploadPage";
 import { Layout } from "@/components/template/Layout";
 import { useRouter } from "next/router";
 import React, { ReactElement, useMemo } from "react";
@@ -6,7 +12,15 @@ import React, { ReactElement, useMemo } from "react";
 const Upload = (): JSX.Element => {
   const router = useRouter();
   const eventId = useMemo(() => router.query.eventId as string, [router]);
-  return <DocumentUploadPage eventId={eventId} />;
+  const { isError, isLoading, data } = useQuery(
+    ["event-collection"],
+    (): AxiosPromise<EventCollectionResponse> =>
+      EventCollectionRepository.findAll()
+  );
+  const eventCollection = useMemo(() => {
+    return data ? data.data.data : null;
+  }, [data]);
+  return <DocumentUploadPage eventId={eventId} eventCollection={eventCollection} />;
 };
 
 Upload.getLayout = function getLayout(page: ReactElement) {

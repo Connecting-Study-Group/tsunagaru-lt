@@ -56,7 +56,9 @@ export const EventDetailPage: React.FC<Props> = memo(
             })}
           </>
         )}
-        <Button onClick={handleOpenAddDocumentModal}>資料の追加</Button>
+        <Link href={`/events/${eventId}/upload`} passHref>
+        <Button component="a">資料の追加</Button>
+        </Link>
       </>
     );
   }
