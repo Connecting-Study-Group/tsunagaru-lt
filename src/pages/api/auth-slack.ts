@@ -28,6 +28,7 @@ export default async function handler(
       const additionalClaim = {
         name: user.profile.display_name,
         picture: user.profile.image_original,
+        sub: user.id,
       };
       const customToken = await firebaseAdmin
         .auth()

@@ -7,7 +7,11 @@ import {
 import { DocumentUploadPage } from "@/components/pages/DocumentUploadPage";
 import { Layout } from "@/components/template/Layout";
 import { useRouter } from "next/router";
-import React, { ReactElement, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
+import {
+  DocumentDetailRepository,
+  DocumentDetailUpdateRequest,
+} from "@/repository/documentRepository";
 
 const Upload = (): JSX.Element => {
   const router = useRouter();
@@ -20,7 +24,9 @@ const Upload = (): JSX.Element => {
   const eventCollection = useMemo(() => {
     return data ? data.data.data : null;
   }, [data]);
-  return <DocumentUploadPage eventId={eventId} eventCollection={eventCollection} />;
+  return (
+    <DocumentUploadPage eventId={eventId} eventCollection={eventCollection} />
+  );
 };
 
 Upload.getLayout = function getLayout(page: ReactElement) {

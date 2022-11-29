@@ -1,5 +1,6 @@
 export type FileData = {
   name: string;
+  user_id: string;
   file: string | null;
   url: string | null;
   title: string;

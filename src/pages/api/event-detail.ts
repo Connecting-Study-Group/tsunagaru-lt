@@ -24,7 +24,6 @@ export default async function handler(
   );
   await Promise.all(
     querySnapshot.docs.map((doc) => {
-      console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
       data[doc.id] = doc.data();
     })
   );

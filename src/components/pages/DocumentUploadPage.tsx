@@ -6,7 +6,8 @@ import {
   Group,
   Select,
   SegmentedControl,
-  FileInput,
+  Text,
+  Box,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { PageTitle } from "../atoms/PageTitle";
@@ -14,6 +15,20 @@ import data from "@emoji-mart/data";
 import EmojiPicker from "@/components/atoms/EmojiPicker";
 import { EventCollection } from "@/repository/eventRepository";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  DocumentDetailRepository,
+  DocumentDetailCreateRequest,
+} from "@/repository/documentRepository";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosPromise } from "axios";
+import { BaseResponse } from "@/types";
+import { useRouter } from "next/router";
+import {
+  Dropzone,
+  DropzoneProps,
+  FileWithPath,
+  MIME_TYPES,
+} from "@mantine/dropzone";
 
 interface Props {
   eventId: string;
@@ -21,13 +36,15 @@ interface Props {
 }
 
 type FormValues = {
-  file: string;
+  files: FileWithPath[];
   url: string;
   eventId: string;
-  name: string;
+  title: string;
   emoji: string;
   emojiPreview: string;
 };
+
+type FileType = typeof MIME_TYPES[keyof typeof MIME_TYPES] | "";
 
 export const DocumentUploadPage: React.FC<Props> = memo(
   ({ eventId, eventCollection }) => {
@@ -35,6 +52,27 @@ export const DocumentUploadPage: React.FC<Props> = memo(
     const [focused, setFocused] = useState(false);
     const [emojiFocused, setEmojiFocused] = useState(false);
     const { user } = useAuth();
+    const router = useRouter();
+    const [file, setFile] = useState("");
+    const [files, setFiles] = useState<FileWithPath[]>([]);
+    const [fileType, setFileType] = useState<FileType>("");
+    const handleFile = (files: any) => {
+      setFiles(files);
+      const file = files[0];
+      const extension =
+        (Object.keys(MIME_TYPES).find(
+          (key) => MIME_TYPES[key as keyof typeof MIME_TYPES] === file.type
+        ) as FileType) || "";
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const binaryData = ((reader.result || "") as any)
+          .split(";base64,")
+          .pop();
+        setFile(binaryData);
+        setFileType(extension);
+      };
+      reader.readAsDataURL(file);
+    };
     const eventCollectionList = useMemo(() => {
       const list = [];
       if (eventCollection) {
@@ -54,17 +92,17 @@ export const DocumentUploadPage: React.FC<Props> = memo(
     }, [focused]);
     const form = useForm({
       initialValues: {
-        file: "",
+        files,
         url: "",
         eventId,
-        name: user?.name || "",
+        title: "",
         emoji: "",
         emojiPreview: "",
       },
 
       validate: {
-        file: (value) =>
-          !value.trim().length && documentType === "file"
+        files: (value) =>
+          typeof value !== "object" && documentType === "file"
             ? "必須項目です"
             : null,
         url: (value) => {
@@ -80,18 +118,46 @@ export const DocumentUploadPage: React.FC<Props> = memo(
           }
           return null;
         },
-        name: (value) => (!!value.trim().length ? null : "必須項目です"),
+        title: (value) => (!!value.trim().length ? null : "必須項目です"),
         emojiPreview: (value) =>
           !!value.trim().length ? null : "必須項目です",
       },
     });
-    const onSubmit = (values: FormValues) => console.log(values);
+    const mutation = useMutation(
+      (req: DocumentDetailCreateRequest): AxiosPromise<BaseResponse> =>
+        DocumentDetailRepository.create(req)
+    );
+    const handleSubmit = (values: FormValues) => {
+      const req: DocumentDetailCreateRequest = {
+        title: values.title,
+        file:
+          {
+            data: file,
+            type: fileType,
+          } || null,
+        url: values.url || null,
+        name: user?.name || "sample",
+        user_id: user?.id || "user-e",
+        emoji: values.emoji,
+        target_event: eventId,
+      };
+      mutation.mutate(req, {
+        onSuccess: () => {
+          // 成功時
+          router.push(`/events/${router.query.eventId}`);
+        },
+        onError: (error) => {
+          // 失敗時
+          console.error(error);
+        },
+      });
+    };
 
     if (!eventCollectionList.length) return <></>;
     return (
       <>
         <PageTitle>資料の投稿</PageTitle>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <Select
             label="勉強会"
             description="LTをした勉強会を選択してください"
@@ -113,14 +179,54 @@ export const DocumentUploadPage: React.FC<Props> = memo(
                 { label: "URL", value: "url" },
               ]}
             />
-            <FileInput
-              placeholder="Pick file"
-              label="Your resume"
-              withAsterisk
-              required
-              {...form.getInputProps("file")}
-              type={documentType === "file" ? "text" : "hidden"}
-            />
+            <Box
+              style={{
+                visibility: documentType === "file" ? "visible" : "hidden",
+                height: documentType === "file" ? "auto" : 0,
+              }}
+            >
+              <Dropzone
+                onDrop={(files) => handleFile(files)}
+                onReject={(files) => console.log("rejected files", files)}
+                maxSize={3 * 1024 ** 2}
+                // accept={IMAGE_MIME_TYPE}
+                {...form.getInputProps("files")}
+              >
+                <Group
+                  position="center"
+                  spacing="xl"
+                  style={{ minHeight: 220, pointerEvents: "none" }}
+                >
+                  <Dropzone.Accept>
+                    {/* <IconX
+            size={50}
+            stroke={1.5}
+            color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+          /> */}
+                  </Dropzone.Accept>
+                  <Dropzone.Reject>
+                    {/* <IconX
+            size={50}
+            stroke={1.5}
+            color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+          /> */}
+                  </Dropzone.Reject>
+                  <Dropzone.Idle>
+                    {/* <IconPhoto size={50} stroke={1.5} /> */}
+                  </Dropzone.Idle>
+
+                  <div>
+                    <Text size="xl" inline>
+                      Drag images here or click to select files
+                    </Text>
+                    <Text size="sm" color="dimmed" inline mt={7}>
+                      Attach as many files as you like, each file should not
+                      exceed 5mb
+                    </Text>
+                  </div>
+                </Group>
+              </Dropzone>
+            </Box>
             <TextInput
               withAsterisk
               required
@@ -129,11 +235,10 @@ export const DocumentUploadPage: React.FC<Props> = memo(
             />
           </Input.Wrapper>
           <TextInput
-            label="名前"
-            description="変更する必要がない場合はそのままで問題ありません"
+            label="表示タイトル"
             withAsterisk
             required
-            {...form.getInputProps("name")}
+            {...form.getInputProps("title")}
           />
 
           <TextInput

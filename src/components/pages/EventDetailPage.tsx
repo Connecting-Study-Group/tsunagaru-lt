@@ -9,11 +9,10 @@ interface Props {
   eventData: EventCollection | null;
   isLoading: boolean;
   title: string;
-  handleOpenAddDocumentModal: () => void;
 }
 
 export const EventDetailPage: React.FC<Props> = memo(
-  ({ eventId, eventData, isLoading, title, handleOpenAddDocumentModal }) => {
+  ({ eventId, eventData, isLoading, title }) => {
     const userList = useMemo(() => {
       if (eventData) {
         return Object.keys(eventData);
@@ -57,7 +56,7 @@ export const EventDetailPage: React.FC<Props> = memo(
           </>
         )}
         <Link href={`/events/${eventId}/upload`} passHref>
-        <Button component="a">資料の追加</Button>
+          <Button component="a">資料の追加</Button>
         </Link>
       </>
     );

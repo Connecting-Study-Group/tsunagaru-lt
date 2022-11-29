@@ -20,7 +20,6 @@ export default async function handler(
       );
       await Promise.all(
         subQuerySnapshot.docs.map((subDoc) => {
-          console.log(`${subDoc.id} => ${JSON.stringify(subDoc.data())}`);
           data[doc.id][subDoc.id] = subDoc.data();
         })
       );

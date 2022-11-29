@@ -44,7 +44,6 @@ export const EventsPage: React.FC<Props> = memo(
       },
       [eventCollection]
     );
-    console.log(eventCollectionKeys);
     if (isLoading) {
       <div>Loading...</div>;
     }

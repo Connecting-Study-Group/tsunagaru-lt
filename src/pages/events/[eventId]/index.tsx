@@ -21,15 +21,12 @@ const EventDetail = (): JSX.Element => {
   const eventData = useMemo(() => {
     return data ? data.data.data : null;
   }, [data]);
-  // 資料の追加
-  const handleOpenAddDocumentModal = useCallback(() => console.log("add"), []);
   return (
     <EventDetailPage
       eventId={eventId}
       eventData={eventData}
       isLoading={isLoading}
       title={`${router.query.eventId}開催`}
-      handleOpenAddDocumentModal={handleOpenAddDocumentModal}
     />
   );
 };
