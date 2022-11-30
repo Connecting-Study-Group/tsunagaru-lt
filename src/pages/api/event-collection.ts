@@ -2,11 +2,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { EventCollectionResponse } from "@/repository/eventRepository";
+import { EventCollection } from "@/features/eventList";
+import { EventId } from "@/types";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<EventCollectionResponse>
+  res: NextApiResponse<Record<EventId, EventCollection>>
 ) {
   const data: Record<string, any> = {};
   const querySnapshot = await getDocs(
@@ -25,5 +26,5 @@ export default async function handler(
       );
     })
   );
-  res.status(200).json({ data });
+  res.status(200).json(data);
 }

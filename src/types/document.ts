@@ -1,4 +1,4 @@
-export type FileData = {
+export type DocumentData = {
   name: string;
   user_id: string;
   file: string | null;
