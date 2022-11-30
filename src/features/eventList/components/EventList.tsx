@@ -1,13 +1,13 @@
 import { useEventList } from "../api/getEventList";
-import { PageTitle } from "@/components/PageTitle";
 import React from "react";
 import Link from "next/link";
 import DocumentList from "./DocumentList";
-import {useEventListData} from "../hooks/useEventListData"
+import { useEventListData } from "../hooks/useEventListData";
+import { Flex, Paper, Stack } from "@mantine/core";
 
 export const EventList = () => {
   const { data, isLoading } = useEventList({});
-  const {eventCollectionKeys} = useEventListData(data)
+  const { eventCollectionKeys } = useEventListData(data);
   // ローディング
   if (isLoading) {
     return <span>loading...</span>;
@@ -16,23 +16,21 @@ export const EventList = () => {
   if (data && !Object.keys(data).length) {
     return <span>no data</span>;
   }
-  console.log(data)
   return (
-    <>
-        {eventCollectionKeys.map((eventId) => (
-          <React.Fragment key={eventId}>
-            <Link href={`/events/${eventId}`}>
-              <article>
+    <Stack spacing="lg">
+      {eventCollectionKeys.map((eventId) => (
+        <React.Fragment key={eventId}>
+          <Link href={`/events/${eventId}`}>
+            <Paper component="article" shadow="xs" p="md">
+              <Flex justify="space-between" align="center">
                 <p>{eventId}開催</p>
                 <span>{`資料${Object.keys(data![eventId]).length}件`}</span>
-                <DocumentList
-                  eventId={eventId}
-                  data={data}
-                />
-              </article>
-            </Link>
-          </React.Fragment>
-        ))}
-    </>
+              </Flex>
+              <DocumentList eventId={eventId} data={data} />
+            </Paper>
+          </Link>
+        </React.Fragment>
+      ))}
+    </Stack>
   );
 };

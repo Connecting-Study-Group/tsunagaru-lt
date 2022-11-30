@@ -40,7 +40,7 @@ export const DefaultLayout: React.FC<PropsWithChildren<Props>> = memo(
               footer={<AppFooter />}
               styles={(theme) => ({
                 main: {
-                  backgroundColor: theme.colors.gray[1],
+                  backgroundColor: theme.colors.gray[0],
                   minHeight: "100dvh",
                 },
               })}

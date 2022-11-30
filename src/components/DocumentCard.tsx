@@ -1,3 +1,4 @@
+import { Card, Box, Text } from '@mantine/core'
 import React, { memo } from 'react'
 
 interface Props {
@@ -8,11 +9,15 @@ interface Props {
 
 export const DocumentCard: React.FC<Props> = memo(({emoji, title, name}) => {
     return (
-        <div>
-          <span>{emoji}</span>
-          <span>{title}</span>
-          <span>{name}</span>
-        </div>
+        <Card shadow="sm" p="md" radius="md" sx={{ width: "160px" }}>
+          <Card.Section bg="indigo.0" p="lg">
+            <span>{emoji}</span>
+          </Card.Section>
+          <Box mt="xs">
+              <Text weight="bold">{title}</Text>
+              <Text size={12} mt={4}>{name}</Text>
+          </Box>
+        </Card>
     )
   })
 
