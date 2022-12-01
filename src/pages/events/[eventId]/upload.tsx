@@ -1,36 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { AxiosPromise } from "axios";
-import {
-  EventCollectionRepository,
-  EventCollectionResponse,
-} from "@/repository/eventRepository";
-import { DocumentUploadPage } from "@/components/pages/DocumentUploadPage";
-import { Layout } from "@/components/template/Layout";
-import { useRouter } from "next/router";
-import React, { ReactElement, useCallback, useMemo } from "react";
-import {
-  DocumentDetailRepository,
-  DocumentDetailUpdateRequest,
-} from "@/repository/documentRepository";
+import { DocumentUploadPage } from "@/features/misc/pages/DocumentUpload";
+import { DefaultLayout } from "@/layouts/Default";
+import React, { ReactElement,  } from "react";
 
 const Upload = (): JSX.Element => {
-  const router = useRouter();
-  const eventId = useMemo(() => router.query.eventId as string, [router]);
-  const { isError, isLoading, data } = useQuery(
-    ["event-collection"],
-    (): AxiosPromise<EventCollectionResponse> =>
-      EventCollectionRepository.findAll()
-  );
-  const eventCollection = useMemo(() => {
-    return data ? data.data.data : null;
-  }, [data]);
   return (
-    <DocumentUploadPage eventId={eventId} eventCollection={eventCollection} />
+    <DocumentUploadPage />
   );
 };
 
 Upload.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title="資料の追加">{page}</Layout>;
+  return <DefaultLayout title="資料の追加">{page}</DefaultLayout>;
 };
 
 export default Upload;
