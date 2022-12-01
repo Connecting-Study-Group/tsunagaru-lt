@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { PageTitle } from "@/components/PageTitle";
-import { EventList } from "@/features/eventList";
+import { EventList } from "@/features/events";
 
 export const EventListPage: React.FC = memo(
   () => {
