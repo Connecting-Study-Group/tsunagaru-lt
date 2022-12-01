@@ -1,9 +1,9 @@
-import { DocumentData } from '@/types/document'
 import React, { memo, useMemo } from 'react'
 import Link from "next/link";
 import { DocumentCard } from "@/components/DocumentCard";
 import { EventCollection } from '../types';
 import { useEventListData } from '../hooks/useEventListData';
+import { Group, Paper } from '@mantine/core';
 
 interface Props {
     eventId: string
@@ -14,11 +14,11 @@ const DocumentList: React.FC<Props> = memo(({eventId, data}) => {
     const {getUserList, getDocument} = useEventListData(data)
     const userList = useMemo(() => getUserList(eventId), [getUserList])
     return (
-        <div>
+        <Paper bg="gray.0" p="md" radius="md" sx={{ minHeight: "140px", display: "flex", alignItems: "center", justifyContent: userList.length ? "flex-start" : "center" }}>
         {!userList.length ? (
           <span>アップロードされた資料はありません</span>
         ) : (
-          <>
+          <Group>
             {userList.map((userId) => {
               const document = getDocument(eventId, userId);
               if (!document) return <></>;
@@ -32,9 +32,9 @@ const DocumentList: React.FC<Props> = memo(({eventId, data}) => {
                 </React.Fragment>
               );
             })}
-          </>
+          </Group>
         )}
-      </div>
+      </Paper>
     )
   })
 
