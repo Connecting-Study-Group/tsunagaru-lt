@@ -1,13 +1,14 @@
 import React, { memo, useMemo } from 'react'
 import Link from "next/link";
 import { DocumentCard } from "@/components/DocumentCard";
-import { EventCollection } from '../types';
 import { useEventListData } from '../hooks/useEventListData';
 import { Group, Paper } from '@mantine/core';
+import { EventId, UserId } from '@/types';
+import { DocumentData } from '@/types/document';
 
 interface Props {
     eventId: string
-    data?: Record<string, EventCollection> 
+    data?: Record<EventId, Record<UserId, DocumentData>> 
 }
 
 const DocumentList: React.FC<Props> = memo(({eventId, data}) => {

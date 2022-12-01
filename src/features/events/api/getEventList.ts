@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
 import { ExtractFnReturnType, QueryConfig } from "@/lib/react-query";
-import { EventCollection } from "../types";
+import { UserId } from "@/types";
+import { DocumentData } from "@/types/document";
 
-export const getEventList = (): Promise<Record<string, EventCollection>> => {
+export const getEventList = (): Promise<Record<string, Record<UserId, DocumentData>>> => {
   return axios.get(`/api/event-collection`);
 };
 
