@@ -1,6 +1,6 @@
 import React, { memo } from "react";
-import { PageTitle } from "../../../components/PageTitle";
-import {Form} from "@/features/documents/components/Form";
+import { PageTitle } from "@/components/PageTitle";
+import {Form} from "@/features/documents";
 
 export const DocumentUploadPage: React.FC = memo(
   () => {
