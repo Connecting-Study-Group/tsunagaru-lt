@@ -2,12 +2,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { EventCollection } from "@/features/eventList";
-import { EventId } from "@/types";
+import { EventId, UserId } from "@/types";
+import { DocumentData } from "@/types/document";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Record<EventId, EventCollection>>
+  res: NextApiResponse<Record<EventId, Record<UserId, DocumentData>>>
 ) {
   const data: Record<string, any> = {};
   const querySnapshot = await getDocs(

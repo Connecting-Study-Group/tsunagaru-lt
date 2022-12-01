@@ -2,10 +2,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { EventCollectionResponse } from "@/repository/eventRepository";
 import { BaseResponse } from "@/types";
-import { DocumentDetailCreateRequest } from "@/repository/documentRepository";
-import { uploadFileToContentful } from "@/lib/contentful";
+import { DocumentDetailCreateRequest, DocumentDetailResponse } from "@/repository/documentRepository";
+import { uploadFileToContentful } from "@/functions/contentful";
 
 type EventRequest = NextApiRequest & {
   query: {
@@ -25,7 +24,7 @@ export const config = {
 
 export default async function handler(
   req: EventRequest,
-  res: NextApiResponse<EventCollectionResponse | BaseResponse>
+  res: NextApiResponse<DocumentDetailResponse | BaseResponse>
 ) {
   if (req.method === "GET") {
     if (!req.query.eventId || !req.query.documentId) {
@@ -45,7 +44,7 @@ export default async function handler(
     if (docSnap.exists()) {
       data = docSnap.data();
     }
-    res.status(200).json({ data });
+    res.status(200).json(data);
   }
   if (req.method === "POST") {
     if (
