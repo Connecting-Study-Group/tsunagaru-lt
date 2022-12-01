@@ -1,7 +1,8 @@
+import { EventId } from '@/types';
 import {useCallback, useMemo} from 'react';
 import { EventCollection } from '../types';
 
-export const useEventListData = (data: Record<string, EventCollection> | undefined) => {
+export const useEventListData = (data: Record<EventId, EventCollection> | undefined) => {
   /** 
    * イベントごとのキー情報
    * 

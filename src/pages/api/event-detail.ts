@@ -2,7 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { EventCollectionResponse } from "@/repository/eventRepository";
+import { UserId } from "@/types";
+import { DocumentData } from "@/types/document";
 
 type EventGetRequest = NextApiRequest & {
   query: {
@@ -12,7 +13,7 @@ type EventGetRequest = NextApiRequest & {
 
 export default async function handler(
   req: EventGetRequest,
-  res: NextApiResponse<EventCollectionResponse>
+  res: NextApiResponse<Record<UserId, DocumentData>>
 ) {
   if (!req.query.eventId) {
     res.status(400);
@@ -27,5 +28,5 @@ export default async function handler(
       data[doc.id] = doc.data();
     })
   );
-  res.status(200).json({ data });
+  res.status(200).json(data);
 }
