@@ -46,8 +46,7 @@ export default async function handler(
     }
     if (!!Object.keys(data).length && data.file) {
       const asset = await getFileFromContentful({ id: data.file });
-      console.log("asset: ");
-      console.log(JSON.stringify(asset));
+      data.file = asset;
     }
     return res.status(200).json(data);
   }
