@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import type { ReactElement, ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -25,6 +26,7 @@ export default function MyApp({
   return getLayout(
     <SessionProvider session={pageProps?.session}>
       <Component {...pageProps} />
+      <Toaster />
     </SessionProvider>
   );
 }
