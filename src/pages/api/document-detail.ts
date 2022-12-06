@@ -2,16 +2,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { BaseResponse } from "@/types";
-import { DocumentDetailCreateRequest, DocumentDetailResponse } from "@/repository/documentRepository";
-import { uploadFileToContentful } from "@/functions/contentful";
+import { BaseResponse, DocumentId, EventId } from "@/types";
+import { uploadFileToContentful } from "@/features/documents/functions/uploadFile";
+import { DocumentData } from "@/types/document";
+import { getFileFromContentful } from "@/features/documents/functions/getFile";
 
 type EventRequest = NextApiRequest & {
   query: {
-    eventId: string | undefined;
-    documentId: string | undefined;
+    eventId: EventId | undefined;
+    documentId: DocumentId | undefined;
   };
-  body: DocumentDetailCreateRequest;
+  body: DocumentData;
 };
 
 export const config = {
@@ -24,12 +25,11 @@ export const config = {
 
 export default async function handler(
   req: EventRequest,
-  res: NextApiResponse<DocumentDetailResponse | BaseResponse>
+  res: NextApiResponse<DocumentData | BaseResponse>
 ) {
   if (req.method === "GET") {
     if (!req.query.eventId || !req.query.documentId) {
-      res.status(400).end("Bad request. Some parameter is missing.");
-      return;
+      return res.status(400).end("Bad request. Some parameter is missing.");
     }
     let data: any = {};
     const docSnap = await getDoc(
@@ -44,7 +44,12 @@ export default async function handler(
     if (docSnap.exists()) {
       data = docSnap.data();
     }
-    res.status(200).json(data);
+    if (!!Object.keys(data).length && data.file) {
+      const asset = await getFileFromContentful({ id: data.file });
+      console.log("asset: ");
+      console.log(JSON.stringify(asset));
+    }
+    return res.status(200).json(data);
   }
   if (req.method === "POST") {
     if (
@@ -56,8 +61,7 @@ export default async function handler(
       req.body.name === undefined ||
       req.body.title === undefined
     ) {
-      res.status(400).end("Bad request. Some parameter is missing.");
-      return;
+      return res.status(400).end("Bad request. Some parameter is missing.");
     }
     let docParams = {
       emoji: req.body.emoji,

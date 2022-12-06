@@ -1,14 +1,10 @@
 import React, { memo } from "react";
-import { PageTitle } from "@/components/PageTitle";
-import {Form} from "@/features/documents";
+import { Form } from "@/features/documents";
 
-export const DocumentUploadPage: React.FC = memo(
-  () => {
-    return (
-      <>
-        <PageTitle>資料の投稿</PageTitle>
-        <Form />
-      </>
-    );
-  }
-);
+export const DocumentUploadPage: React.FC = memo(() => {
+  return (
+    <>
+      <Form />
+    </>
+  );
+});

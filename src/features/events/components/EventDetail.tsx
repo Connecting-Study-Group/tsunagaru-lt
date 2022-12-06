@@ -1,48 +1,60 @@
-import { Button, Group } from "@mantine/core";
+import { Group } from "@mantine/core";
 import Link from "next/link";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { DocumentCard } from "@/components/DocumentCard";
 import { useEventDetail } from "../api/getEventDetail";
 import { useEventDetailData } from "../hooks/useEventDetailData";
 import { UploadDocumentFloatingButton } from "./UploadDocumentFloatingButton";
+import { EventId } from "@/types";
+import { PageTitle } from "@/components/PageTitle";
 
 interface Props {
-  eventId: string;
+  eventId: EventId;
 }
 
 export const EventDetail: React.FC<Props> = memo(({ eventId }) => {
   const { data, isLoading } = useEventDetail({ eventId });
-  const {userList, getDocument} = useEventDetailData(data)
-  console.log(data)
+  const { userList, getDocument } = useEventDetailData(data);
+  const pageTitle = useMemo(() => {
+    return `${eventId}開催`;
+  }, [eventId]);
   // ローディング
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <>
+        <PageTitle>{pageTitle}</PageTitle>
+        <p>Loading...</p>
+      </>
+    );
   // データ0件
-  if (!userList.length) return (
-  <>
-      <p>no data</p>
-      <UploadDocumentFloatingButton url={`/events/${eventId}/upload`} />
-  </>
-  );
+  if (!userList.length)
+    return (
+      <>
+        <PageTitle>{pageTitle}</PageTitle>
+        <p>no data</p>
+        <UploadDocumentFloatingButton url={`/events/${eventId}/upload`} />
+      </>
+    );
   return (
     <>
-        <Group>
-          {userList.map((userId) => {
-            const document = getDocument(userId);
-            console.log(userList)
-            return (
-              <React.Fragment key={userId}>
-                <Link href={`/events/${eventId}/documents/${userId}`}>
-                  <DocumentCard
-                    emoji={document?.emoji || ""}
-                    title={document?.title || ""}
-                    name={document?.name || ""}
-                  />
-                </Link>
-              </React.Fragment>
-            );
-          })}
-        </Group>
-        <UploadDocumentFloatingButton url={`/events/${eventId}/upload`} />
+      <PageTitle>{pageTitle}</PageTitle>
+      <Group>
+        {userList.map((userId) => {
+          const document = getDocument(userId);
+          return (
+            <React.Fragment key={userId}>
+              <Link href={`/events/${eventId}/documents/${userId}`}>
+                <DocumentCard
+                  emoji={document?.emoji || ""}
+                  title={document?.title || ""}
+                  name={document?.name || ""}
+                />
+              </Link>
+            </React.Fragment>
+          );
+        })}
+      </Group>
+      <UploadDocumentFloatingButton url={`/events/${eventId}/upload`} />
     </>
   );
 });

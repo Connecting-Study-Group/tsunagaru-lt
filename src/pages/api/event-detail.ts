@@ -16,8 +16,7 @@ export default async function handler(
   res: NextApiResponse<Record<UserId, DocumentData>>
 ) {
   if (!req.query.eventId) {
-    res.status(400);
-    return;
+    return res.status(400);
   }
   const data: Record<string, any> = {};
   const querySnapshot = await getDocs(
