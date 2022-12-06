@@ -10,6 +10,7 @@ export type UseAuth = () => {
   user?: {
     name: string;
     image: string;
+    id: string;
   };
   status: "authenticated" | "loading" | "unauthenticated";
 };
@@ -75,6 +76,7 @@ export const useAuth = () => {
         | {
             name: string;
             image: string;
+            id: string;
           }
         | undefined,
     [session]

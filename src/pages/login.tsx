@@ -1,13 +1,13 @@
-import { Layout } from "@/components/template/Layout";
+import { DefaultLayout } from "@/layouts/Default";
 import React, { ReactElement } from "react";
-import { LoginPage } from "@/components/pages/LoginPage";
+import { LoginPage } from "@/features/misc/pages/Login";
 
 const Login = (): JSX.Element => {
-  return <LoginPage />;
+  return <LoginPage />
 };
 
 Login.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title="ログイン">{page}</Layout>;
+  return <DefaultLayout title="ログイン">{page}</DefaultLayout>;
 };
 
 export default Login;

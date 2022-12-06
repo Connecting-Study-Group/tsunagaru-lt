@@ -1,13 +1,14 @@
-import { Layout } from "@/components/template/Layout";
+import React from "react";
+import { DefaultLayout } from "@/layouts/Default";
 import { ReactElement } from "react";
-import { IndexPage } from "@/components/pages/IndexPage";
+import { IndexPage } from "@/features/misc/pages/Index";
 
 const Index = (): JSX.Element => {
-  return <IndexPage />;
+  return <IndexPage />
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return <DefaultLayout>{page}</DefaultLayout>;
 };
 
 export default Index;
