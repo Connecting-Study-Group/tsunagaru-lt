@@ -1,20 +1,45 @@
 import React, { memo } from "react";
 import { Dropzone, FileWithPath, MIME_TYPES } from "@mantine/dropzone";
 import { UseFormReturnType } from "@mantine/form";
-import { Group, Text } from "@mantine/core";
+import { Group, Text, createStyles, Box } from "@mantine/core";
 import { FormValues } from "../types";
+import { MdInsertDriveFile, MdCheck, MdOutlineError } from "react-icons/md";
+
+const useStyles = createStyles((theme) => ({
+  disabled: {
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
+    borderColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[5]
+        : theme.colors.gray[2],
+    cursor: "not-allowed",
+
+    "& *": {
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[3]
+          : theme.colors.gray[5],
+    },
+  },
+}));
 
 interface Props {
   form: UseFormReturnType<FormValues, (values: FormValues) => FormValues>;
+  files: FileWithPath[];
   setFile: React.Dispatch<React.SetStateAction<string>>;
   setFiles: React.Dispatch<React.SetStateAction<FileWithPath[]>>;
   setFileType: React.Dispatch<React.SetStateAction<FileType>>;
+  isLoading: boolean;
 }
 
 type FileType = typeof MIME_TYPES[keyof typeof MIME_TYPES] | "";
 
 const DocumentInput: React.FC<Props> = memo(
-  ({ form, setFile, setFileType, setFiles }) => {
+  ({ files, form, setFile, setFileType, setFiles, isLoading }) => {
+    const { classes } = useStyles();
     /**
      * ファイル変更処理
      *
@@ -38,46 +63,47 @@ const DocumentInput: React.FC<Props> = memo(
       reader.readAsDataURL(file);
     };
     return (
-      <Dropzone
-        onDrop={(files) => handleFile(files)}
-        onReject={(files) => console.log("rejected files", files)}
-        maxSize={3 * 1024 ** 2}
-        // accept={IMAGE_MIME_TYPE}
-        {...form.getInputProps("files")}
-      >
-        <Group
-          position="center"
-          spacing="xl"
-          style={{ minHeight: 220, pointerEvents: "none" }}
+      <>
+        <Dropzone
+          onDrop={(files) => handleFile(files)}
+          onReject={(files) => console.log("rejected files", files)}
+          maxSize={3 * 1024 ** 2}
+          disabled={isLoading}
+          className={isLoading && classes.disabled}
+          // accept={IMAGE_MIME_TYPE}
+          {...form.getInputProps("files")}
         >
-          <Dropzone.Accept>
-            {/* <IconX
-    size={50}
-    stroke={1.5}
-    color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
-  /> */}
-          </Dropzone.Accept>
-          <Dropzone.Reject>
-            {/* <IconX
-    size={50}
-    stroke={1.5}
-    color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
-  /> */}
-          </Dropzone.Reject>
-          <Dropzone.Idle>
-            {/* <IconPhoto size={50} stroke={1.5} /> */}
-          </Dropzone.Idle>
+          <Group
+            position="center"
+            spacing="xl"
+            style={{ minHeight: 160, pointerEvents: "none" }}
+          >
+            <Dropzone.Accept>
+              <MdCheck size={32} color="blue" />
+            </Dropzone.Accept>
+            <Dropzone.Reject>
+              <MdOutlineError size={32} color="red" />
+            </Dropzone.Reject>
+            <Dropzone.Idle>
+              <MdInsertDriveFile size={32} color="gray" />
+            </Dropzone.Idle>
 
-          <div>
-            <Text size="xl" inline>
-              Drag images here or click to select files
-            </Text>
-            <Text size="sm" color="dimmed" inline mt={7}>
-              Attach as many files as you like, each file should not exceed 5mb
-            </Text>
-          </div>
-        </Group>
-      </Dropzone>
+            <div>
+              <Text size="xl" inline>
+                ここに画像をドラッグするか、クリックしてファイルを選択します。
+              </Text>
+              <Text size="sm" color="dimmed" inline mt={7}>
+                ファイルは5MBを超えないようにしてください。
+              </Text>
+            </div>
+          </Group>
+        </Dropzone>
+        {!!files.length && (
+          <Box mt="xs" mb="xl">
+            <Text>アップロードしたファイル：{files[0].name}</Text>
+          </Box>
+        )}
+      </>
     );
   }
 );

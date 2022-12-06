@@ -135,9 +135,11 @@ export const Form = memo(() => {
           >
             <DocumentInput
               form={form}
+              files={files}
               setFile={setFile}
               setFiles={setFiles}
               setFileType={setFileType}
+              isLoading={mutation.isLoading}
             />
           </Box>
           {/* LT資料：URL */}
@@ -158,7 +160,9 @@ export const Form = memo(() => {
         {/* アイキャッチ絵文字 */}
         <EmojiInput form={form} />
         <Group position="right" mt="md">
-          <Button type="submit">アップロード</Button>
+          <Button type="submit" disabled={mutation.isLoading}>
+            アップロード
+          </Button>
         </Group>
       </form>
     </>
