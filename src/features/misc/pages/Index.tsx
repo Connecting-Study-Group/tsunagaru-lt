@@ -42,7 +42,7 @@ export const IndexPage = memo(() => {
               variant="gradient"
               gradient={{ from: "teal", to: "lime", deg: 105 }}
             >
-              支払いページを見る
+              勉強会一覧を見る
             </Button>
           </Link>
         </Box>

@@ -13,8 +13,7 @@ export default async function handler(
 
     if (!slackAuthCode) {
       console.warn("code query string not find.");
-      res.status(400);
-      return;
+      return res.status(400);
     }
 
     const userCredential = await oauthAccess(slackAuthCode as string);
@@ -28,6 +27,7 @@ export default async function handler(
       const additionalClaim = {
         name: user.profile.display_name,
         picture: user.profile.image_original,
+        sub: user.id,
       };
       const customToken = await firebaseAdmin
         .auth()
@@ -36,23 +36,20 @@ export default async function handler(
       if (redirectUri) {
         const url = new URL(redirectUri);
         url.search = `t=${customToken}`;
-        res.redirect(303, url.toString());
+        return res.redirect(303, url.toString());
       } else {
-        res.json({
+        return res.json({
           custom_token: customToken,
           user,
         });
       }
-      return;
     } catch (err) {
-      res
+      return res
         .status(500)
         .json(err instanceof Error ? err.message : "エラーが発生しました");
-      return;
     }
   } else {
     res.setHeader("Allow", "GET");
-    res.status(405).end("Method Not Allowed");
-    return;
+    return res.status(405).end("Method Not Allowed");
   }
 }

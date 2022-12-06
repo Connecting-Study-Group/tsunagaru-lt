@@ -2,11 +2,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { EventCollectionResponse } from "@/repository/eventRepository";
+import { EventId, UserId } from "@/types";
+import { DocumentData } from "@/types/document";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<EventCollectionResponse>
+  res: NextApiResponse<Record<EventId, Record<UserId, DocumentData>>>
 ) {
   const data: Record<string, any> = {};
   const querySnapshot = await getDocs(
@@ -20,11 +21,10 @@ export default async function handler(
       );
       await Promise.all(
         subQuerySnapshot.docs.map((subDoc) => {
-          console.log(`${subDoc.id} => ${JSON.stringify(subDoc.data())}`);
           data[doc.id][subDoc.id] = subDoc.data();
         })
       );
     })
   );
-  res.status(200).json({ data });
+  res.status(200).json(data);
 }

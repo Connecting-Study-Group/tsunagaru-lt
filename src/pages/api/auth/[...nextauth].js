@@ -13,7 +13,7 @@ export default NextAuth({
             const decoded = await firebaseAdmin.auth().verifyIdToken(idToken);
             return { ...decoded };
           } catch (error) {
-            console.log("Failed to verify ID token:", error);
+            console.error("Failed to verify ID token:", error);
           }
         }
         return null;
@@ -21,6 +21,12 @@ export default NextAuth({
     }),
   ],
   callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.uid;
+      }
+      return session;
+    },
     jwt: async ({ token, user }) => {
       if (user) {
         return user;
