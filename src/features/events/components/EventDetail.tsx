@@ -43,7 +43,10 @@ export const EventDetail: React.FC<Props> = memo(({ eventId }) => {
           const document = getDocument(userId);
           return (
             <React.Fragment key={userId}>
-              <Link href={`/events/${eventId}/documents/${userId}`}>
+              <Link
+                href={`/events/${eventId}/documents/${userId}`}
+                style={{ textDecoration: "none" }}
+              >
                 <DocumentCard
                   emoji={document?.emoji || ""}
                   title={document?.title || ""}
