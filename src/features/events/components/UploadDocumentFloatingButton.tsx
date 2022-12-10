@@ -1,9 +1,9 @@
-import React, { memo } from "react";
-import { Button } from "@mantine/core";
-import Link from "next/link";
+import React, { memo } from "react"
+import { Button } from "@mantine/core"
+import Link from "next/link"
 
 interface Props {
-  url: string;
+  url: string
 }
 
 export const UploadDocumentFloatingButton: React.FC<Props> = memo(({ url }) => {
@@ -22,5 +22,5 @@ export const UploadDocumentFloatingButton: React.FC<Props> = memo(({ url }) => {
     >
       資料の追加
     </Button>
-  );
-});
+  )
+})

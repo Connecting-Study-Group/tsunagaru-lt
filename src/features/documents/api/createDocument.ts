@@ -1,14 +1,12 @@
-import { useMutation, UseMutationOptions } from "@tanstack/react-query";
-import { axios } from "@/lib/axios";
-import { DocumentDetailCreateRequest } from "../types";
-import { BaseResponse } from "@/types";
-import toast from "react-hot-toast";
-import { AxiosResponse } from "axios";
+import { useMutation, UseMutationOptions } from "@tanstack/react-query"
+import { axios } from "@/lib/axios"
+import { DocumentDetailCreateRequest } from "../types"
+import { BaseResponse } from "@/types"
+import toast from "react-hot-toast"
+import { AxiosResponse } from "axios"
 
-export const createDocument = (
-  req: DocumentDetailCreateRequest
-): Promise<AxiosResponse<BaseResponse, any>> => {
-  const myPromise = axios.post<BaseResponse>(`/api/document-detail`, req);
+export const createDocument = (req: DocumentDetailCreateRequest): Promise<AxiosResponse<BaseResponse, any>> => {
+  const myPromise = axios.post<BaseResponse>(`/api/document-detail`, req)
   toast.promise(
     myPromise,
     {
@@ -19,22 +17,17 @@ export const createDocument = (
     {
       position: "top-right",
     }
-  );
-  return myPromise;
-};
+  )
+  return myPromise
+}
 
 type UseCreateDocumentOptions = {
-  config?: UseMutationOptions<
-    AxiosResponse<BaseResponse, any>,
-    unknown,
-    DocumentDetailCreateRequest,
-    unknown
-  >;
-};
+  config?: UseMutationOptions<AxiosResponse<BaseResponse, any>, unknown, DocumentDetailCreateRequest, unknown>
+}
 
 export const useCreateDocument = ({ config }: UseCreateDocumentOptions) => {
   return useMutation({
     ...config,
     mutationFn: createDocument,
-  });
-};
+  })
+}

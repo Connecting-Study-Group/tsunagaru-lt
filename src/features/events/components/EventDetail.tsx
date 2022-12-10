@@ -1,23 +1,23 @@
-import { Group } from "@mantine/core";
-import Link from "next/link";
-import React, { memo, useMemo } from "react";
-import { DocumentCard } from "@/components/DocumentCard";
-import { useEventDetail } from "../api/getEventDetail";
-import { useEventDetailData } from "../hooks/useEventDetailData";
-import { UploadDocumentFloatingButton } from "./UploadDocumentFloatingButton";
-import { EventId } from "@/types";
-import { PageTitle } from "@/components/PageTitle";
+import { Group } from "@mantine/core"
+import Link from "next/link"
+import React, { memo, useMemo } from "react"
+import { DocumentCard } from "@/components/DocumentCard"
+import { useEventDetail } from "../api/getEventDetail"
+import { useEventDetailData } from "../hooks/useEventDetailData"
+import { UploadDocumentFloatingButton } from "./UploadDocumentFloatingButton"
+import { EventId } from "@/types"
+import { PageTitle } from "@/components/PageTitle"
 
 interface Props {
-  eventId: EventId;
+  eventId: EventId
 }
 
 export const EventDetail: React.FC<Props> = memo(({ eventId }) => {
-  const { data, isLoading } = useEventDetail({ eventId });
-  const { userList, getDocument } = useEventDetailData(data);
+  const { data, isLoading } = useEventDetail({ eventId })
+  const { userList, getDocument } = useEventDetailData(data)
   const pageTitle = useMemo(() => {
-    return `${eventId}開催`;
-  }, [eventId]);
+    return `${eventId}開催`
+  }, [eventId])
   // ローディング
   if (isLoading)
     return (
@@ -25,7 +25,7 @@ export const EventDetail: React.FC<Props> = memo(({ eventId }) => {
         <PageTitle>{pageTitle}</PageTitle>
         <p>Loading...</p>
       </>
-    );
+    )
   // データ0件
   if (!userList.length)
     return (
@@ -34,30 +34,23 @@ export const EventDetail: React.FC<Props> = memo(({ eventId }) => {
         <p>no data</p>
         <UploadDocumentFloatingButton url={`/events/${eventId}/upload`} />
       </>
-    );
+    )
   return (
     <>
       <PageTitle>{pageTitle}</PageTitle>
       <Group>
         {userList.map((userId) => {
-          const document = getDocument(userId);
+          const document = getDocument(userId)
           return (
             <React.Fragment key={userId}>
-              <Link
-                href={`/events/${eventId}/documents/${userId}`}
-                style={{ textDecoration: "none" }}
-              >
-                <DocumentCard
-                  emoji={document?.emoji || ""}
-                  title={document?.title || ""}
-                  name={document?.name || ""}
-                />
+              <Link href={`/events/${eventId}/documents/${userId}`} style={{ textDecoration: "none" }}>
+                <DocumentCard emoji={document?.emoji || ""} title={document?.title || ""} name={document?.name || ""} />
               </Link>
             </React.Fragment>
-          );
+          )
         })}
       </Group>
       <UploadDocumentFloatingButton url={`/events/${eventId}/upload`} />
     </>
-  );
-});
+  )
+})
