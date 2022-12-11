@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react"
-import { Text, Paper, Box, Button } from "@mantine/core"
+import { Text, Button } from "@mantine/core"
 import { useAuth } from "@/hooks/useAuth"
 import { LogoSlack } from "react-ionicons"
 import SystemHelper from "@/functions/system"

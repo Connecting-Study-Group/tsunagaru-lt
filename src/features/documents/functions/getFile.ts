@@ -1,6 +1,5 @@
 import { CONTENTFUL_BASE_INFO } from "@/constants"
 import client from "@/lib/contentful"
-import { MIME_TYPES } from "@mantine/dropzone"
 import { Asset } from "contentful-management"
 
 export interface GetFileFromContentfulParams {
