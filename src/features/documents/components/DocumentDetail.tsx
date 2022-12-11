@@ -34,7 +34,7 @@ export const DocumentDetail: React.FC<Props> = memo(({ eventId, documentId }) =>
         <span>{data.name}</span>
         {data.file && (
           <p>
-            <a target="_blank" href={documentUrl} download={documentName}>
+            <a target="_blank" href={documentUrl} download={documentName} rel="noreferrer">
               ダウンロード
             </a>
           </p>
