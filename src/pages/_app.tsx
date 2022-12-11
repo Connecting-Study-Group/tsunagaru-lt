@@ -1,7 +1,7 @@
-import { SessionProvider } from "next-auth/react"
-import { useEffect } from "react"
 import type { NextPage } from "next"
+import { SessionProvider } from "next-auth/react"
 import type { AppProps } from "next/app"
+import { useEffect } from "react"
 import type { ReactElement, ReactNode } from "react"
 import { Toaster } from "react-hot-toast"
 

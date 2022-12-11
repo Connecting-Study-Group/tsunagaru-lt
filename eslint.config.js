@@ -11,6 +11,18 @@ module.exports = [
     rules: {
       ...prettier.rules,
       "react/display-name": "off",
+      "import/order": [
+        "error",
+        {
+          "newlines-between": "always",
+          groups: ["builtin", "external", "internal", ["parent", "sibling"], "index"],
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
+      "import/no-duplicates": "error",
     },
   },
   {

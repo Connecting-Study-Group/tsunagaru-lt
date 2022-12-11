@@ -1,8 +1,9 @@
-import React, { memo, useEffect, useState } from "react"
 import { Text, Button } from "@mantine/core"
-import { useAuth } from "@/hooks/useAuth"
+import React, { memo, useEffect, useState } from "react"
 import { LogoSlack } from "react-ionicons"
+
 import SystemHelper from "@/functions/system"
+import { useAuth } from "@/hooks/useAuth"
 
 const BASE_URL = `https://slack.com/oauth/authorize?scope=team:read,users:read&client_id=${process.env.NEXT_PUBLIC_SLACK_CLIENT_ID}&state=`
 

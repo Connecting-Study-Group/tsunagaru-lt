@@ -1,6 +1,7 @@
+import React, { ReactElement } from "react"
+
 import { DocumentUploadPage } from "@/features/misc/pages/DocumentUpload"
 import { DefaultLayout } from "@/layouts/Default"
-import React, { ReactElement } from "react"
 
 const Upload = (): JSX.Element => {
   return <DocumentUploadPage />

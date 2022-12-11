@@ -1,4 +1,5 @@
 import React, { memo } from "react"
+
 import { DocumentDetail } from "@/features/documents"
 import { useRouterQuery } from "@/hooks/useRouterQuery"
 

@@ -1,6 +1,6 @@
-import React, { memo } from "react"
 import { Button } from "@mantine/core"
 import Link from "next/link"
+import React, { memo } from "react"
 
 interface Props {
   url: string

@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react"
-import { DefaultLayout } from "@/layouts/Default"
+
 import { EventDetailPage } from "@/features/misc/pages/EventDetail"
+import { DefaultLayout } from "@/layouts/Default"
 
 const EventDetail = (): JSX.Element => {
   return <EventDetailPage />

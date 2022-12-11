@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+
 import { axios } from "@/lib/axios"
 import { ExtractFnReturnType, QueryConfig } from "@/lib/react-query"
 import { UserId } from "@/types"

@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react"
-import { DefaultLayout } from "@/layouts/Default"
+
 import { DocumentDetailPage } from "@/features/misc/pages/DocumentDetail"
+import { DefaultLayout } from "@/layouts/Default"
 
 const DocumentDetail = (): JSX.Element => {
   return <DocumentDetailPage />

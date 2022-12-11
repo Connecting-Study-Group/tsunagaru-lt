@@ -1,6 +1,7 @@
+import { Asset } from "contentful-management"
+
 import { CONTENTFUL_BASE_INFO } from "@/constants"
 import client from "@/lib/contentful"
-import { Asset } from "contentful-management"
 
 export interface GetFileFromContentfulParams {
   id: string

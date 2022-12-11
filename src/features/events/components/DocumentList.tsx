@@ -1,10 +1,12 @@
-import React, { memo, useMemo } from "react"
-import Link from "next/link"
-import { DocumentCard } from "@/components/DocumentCard"
-import { useEventListData } from "../hooks/useEventListData"
 import { Group, Paper } from "@mantine/core"
+import Link from "next/link"
+import React, { memo, useMemo } from "react"
+
+import { DocumentCard } from "@/components/DocumentCard"
 import { EventId, UserId } from "@/types"
 import { DocumentData } from "@/types/document"
+
+import { useEventListData } from "../hooks/useEventListData"
 
 interface Props {
   eventId: string

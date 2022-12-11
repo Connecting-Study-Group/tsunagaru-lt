@@ -1,8 +1,9 @@
-import { useCallback, useMemo, useEffect } from "react"
 import { getAuth, signInWithCustomToken } from "firebase/auth"
-import { firebaseApp } from "@/lib/firebase"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { useRouter } from "next/router"
+import { useCallback, useMemo, useEffect } from "react"
+
+import { firebaseApp } from "@/lib/firebase"
 
 export type UseAuth = () => {
   handleLogout: () => void

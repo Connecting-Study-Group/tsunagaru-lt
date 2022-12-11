@@ -1,6 +1,7 @@
-import { DefaultLayout } from "@/layouts/Default"
 import React, { ReactElement } from "react"
+
 import { LoginPage } from "@/features/misc/pages/Login"
+import { DefaultLayout } from "@/layouts/Default"
 
 const Login = (): JSX.Element => {
   return <LoginPage />

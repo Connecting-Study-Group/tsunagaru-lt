@@ -1,6 +1,7 @@
+import { useCallback, useMemo } from "react"
+
 import { EventId, UserId } from "@/types"
 import { DocumentData } from "@/types/document"
-import { useCallback, useMemo } from "react"
 
 export const useEventListData = (data: Record<EventId, Record<UserId, DocumentData>> | undefined) => {
   /**

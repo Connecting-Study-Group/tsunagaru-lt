@@ -1,7 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next"
-import { db } from "@/lib/firebase"
 import { collection, getDocs, orderBy, query } from "firebase/firestore"
+import type { NextApiRequest, NextApiResponse } from "next"
+
+import { db } from "@/lib/firebase"
 import { EventId, UserId } from "@/types"
 import { DocumentData } from "@/types/document"
 

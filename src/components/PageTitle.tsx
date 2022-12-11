@@ -1,5 +1,5 @@
-import React, { memo, PropsWithChildren } from "react"
 import { Text } from "@mantine/core"
+import React, { memo, PropsWithChildren } from "react"
 
 interface Props {
   as?: string

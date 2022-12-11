@@ -1,9 +1,10 @@
-import React, { memo } from "react"
-import Image from "next/image"
 import { Text, Paper, Box, Button } from "@mantine/core"
+import Image from "next/image"
+import Link from "next/link"
+import React, { memo } from "react"
+
 import { Spacer } from "@/components/system/Spacer"
 import { useAuth } from "@/hooks/useAuth"
-import Link from "next/link"
 
 export const IndexPage = memo(() => {
   const { user } = useAuth()

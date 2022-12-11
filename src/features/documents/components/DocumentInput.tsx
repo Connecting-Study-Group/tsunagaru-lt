@@ -1,9 +1,10 @@
-import React, { memo } from "react"
+import { Group, Text, createStyles, Box } from "@mantine/core"
 import { Dropzone, FileWithPath, MIME_TYPES } from "@mantine/dropzone"
 import { UseFormReturnType } from "@mantine/form"
-import { Group, Text, createStyles, Box } from "@mantine/core"
-import { FormValues } from "../types"
+import React, { memo } from "react"
 import { MdInsertDriveFile, MdCheck, MdOutlineError } from "react-icons/md"
+
+import { FormValues } from "../types"
 
 const useStyles = createStyles((theme) => ({
   disabled: {

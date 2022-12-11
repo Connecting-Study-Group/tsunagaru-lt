@@ -1,5 +1,6 @@
-import { DocumentData } from "@/types/document"
 import { FileWithPath, MIME_TYPES } from "@mantine/dropzone"
+
+import { DocumentData } from "@/types/document"
 
 export type FormValues = {
   files: FileWithPath[]

@@ -1,8 +1,10 @@
-import React, { memo, useState, useEffect } from "react"
-import { TextInput } from "@mantine/core"
-import EmojiPicker from "@/features/documents/components/EmojiPicker"
 import data from "@emoji-mart/data"
+import { TextInput } from "@mantine/core"
 import { UseFormReturnType } from "@mantine/form"
+import React, { memo, useState, useEffect } from "react"
+
+import EmojiPicker from "@/features/documents/components/EmojiPicker"
+
 import { FormValues } from "../types"
 
 interface Props {

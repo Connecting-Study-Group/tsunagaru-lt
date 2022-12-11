@@ -1,6 +1,5 @@
-import { Text } from "@mantine/core"
+import { Text, Header } from "@mantine/core"
 import React, { memo } from "react"
-import { Header } from "@mantine/core"
 
 export const AppHeader = memo(() => {
   return (

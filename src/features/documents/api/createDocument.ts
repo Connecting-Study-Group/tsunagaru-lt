@@ -1,9 +1,11 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query"
-import { axios } from "@/lib/axios"
-import { DocumentDetailCreateRequest } from "../types"
-import { BaseResponse } from "@/types"
-import toast from "react-hot-toast"
 import { AxiosResponse } from "axios"
+import toast from "react-hot-toast"
+
+import { axios } from "@/lib/axios"
+import { BaseResponse } from "@/types"
+
+import { DocumentDetailCreateRequest } from "../types"
 
 export const createDocument = (req: DocumentDetailCreateRequest): Promise<AxiosResponse<BaseResponse, any>> => {
   const myPromise = axios.post<BaseResponse>(`/api/document-detail`, req)

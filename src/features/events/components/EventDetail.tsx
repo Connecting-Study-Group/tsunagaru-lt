@@ -1,12 +1,14 @@
 import { Group } from "@mantine/core"
 import Link from "next/link"
 import React, { memo, useMemo } from "react"
+
 import { DocumentCard } from "@/components/DocumentCard"
+import { PageTitle } from "@/components/PageTitle"
+import { EventId } from "@/types"
+
 import { useEventDetail } from "../api/getEventDetail"
 import { useEventDetailData } from "../hooks/useEventDetailData"
 import { UploadDocumentFloatingButton } from "./UploadDocumentFloatingButton"
-import { EventId } from "@/types"
-import { PageTitle } from "@/components/PageTitle"
 
 interface Props {
   eventId: EventId

@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react"
+
 import { EventListPage } from "@/features/misc/pages/EventList"
 import { DefaultLayout } from "@/layouts/Default"
 

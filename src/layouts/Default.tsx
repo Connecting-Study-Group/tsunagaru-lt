@@ -1,12 +1,12 @@
-import React, { memo, PropsWithChildren, useMemo } from "react"
-import { AppShell } from "@mantine/core"
-import { AppHeader } from "@/features/Header"
+import { AppShell, MantineProvider } from "@mantine/core"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import { MantineProvider } from "@mantine/core"
 import Head from "next/head"
+import React, { memo, PropsWithChildren, useMemo } from "react"
+
 import { APP_NAME } from "@/constants"
 import { AppFooter } from "@/features/Footer"
+import { AppHeader } from "@/features/Header"
 
 interface Props {
   title?: string

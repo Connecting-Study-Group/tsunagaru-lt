@@ -1,10 +1,12 @@
-import { useEventList } from "../api/getEventList"
-import React from "react"
-import Link from "next/link"
-import DocumentList from "./DocumentList"
-import { useEventListData } from "../hooks/useEventListData"
 import { Flex, Paper, Stack } from "@mantine/core"
+import Link from "next/link"
+import React from "react"
+
 import { PageTitle } from "@/components/PageTitle"
+
+import { useEventList } from "../api/getEventList"
+import { useEventListData } from "../hooks/useEventListData"
+import DocumentList from "./DocumentList"
 
 export const EventList = () => {
   const { data, isLoading } = useEventList({})

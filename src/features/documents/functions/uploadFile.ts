@@ -1,9 +1,11 @@
-import { CONTENTFUL_BASE_INFO } from "@/constants"
-import client from "@/lib/contentful"
-import { MIME_TYPES } from "@mantine/dropzone"
-import { Asset } from "contentful-management"
 import fs from "fs"
 import path from "path"
+
+import { MIME_TYPES } from "@mantine/dropzone"
+import { Asset } from "contentful-management"
+
+import { CONTENTFUL_BASE_INFO } from "@/constants"
+import client from "@/lib/contentful"
 
 const TMP_FILE_NAME = "tmp"
 

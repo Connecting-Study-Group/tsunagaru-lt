@@ -1,6 +1,8 @@
+import React, { memo, useMemo } from "react"
+
 import { PageTitle } from "@/components/PageTitle"
 import { DocumentId, EventId } from "@/types"
-import React, { memo, useMemo } from "react"
+
 import { useDocumentDetail } from "../api/getDocument"
 
 interface Props {

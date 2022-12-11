@@ -1,16 +1,18 @@
-import React, { memo, useState, useMemo } from "react"
 import { TextInput, Input, Button, Group, Select, SegmentedControl, Box } from "@mantine/core"
-import { useForm } from "@mantine/form"
-import { useAuth } from "@/hooks/useAuth"
-import { useRouter } from "next/router"
 import { FileWithPath } from "@mantine/dropzone"
-import EmojiInput from "@/features/documents/components/EmojiInput"
-import DocumentInput from "@/features/documents/components/DocumentInput"
-import { useEventList } from "@/features/events/api/getEventList"
-import { DocumentDetailCreateRequest, FileType, FormValues } from "../types"
-import { useCreateDocument } from "../api/createDocument"
-import { useRouterQuery } from "@/hooks/useRouterQuery"
+import { useForm } from "@mantine/form"
+import { useRouter } from "next/router"
+import React, { memo, useState, useMemo } from "react"
+
 import { PageTitle } from "@/components/PageTitle"
+import DocumentInput from "@/features/documents/components/DocumentInput"
+import EmojiInput from "@/features/documents/components/EmojiInput"
+import { useEventList } from "@/features/events/api/getEventList"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouterQuery } from "@/hooks/useRouterQuery"
+
+import { useCreateDocument } from "../api/createDocument"
+import { DocumentDetailCreateRequest, FileType, FormValues } from "../types"
 
 export const Form = memo(() => {
   const { data } = useEventList({})

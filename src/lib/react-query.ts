@@ -1,5 +1,5 @@
-import { AxiosError } from "axios"
 import { QueryClient, UseQueryOptions, UseMutationOptions, DefaultOptions } from "@tanstack/react-query"
+import { AxiosError } from "axios"
 import { PromiseValue } from "type-fest"
 
 const queryConfig: DefaultOptions = {

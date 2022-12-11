@@ -1,11 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next"
-import { db } from "@/lib/firebase"
 import { doc, getDoc, setDoc } from "firebase/firestore"
-import { BaseResponse, DocumentId, EventId } from "@/types"
-import { uploadFileToContentful } from "@/features/documents/functions/uploadFile"
-import { DocumentData } from "@/types/document"
+import type { NextApiRequest, NextApiResponse } from "next"
+
 import { getFileFromContentful } from "@/features/documents/functions/getFile"
+import { uploadFileToContentful } from "@/features/documents/functions/uploadFile"
+import { db } from "@/lib/firebase"
+import { BaseResponse, DocumentId, EventId } from "@/types"
+import { DocumentData } from "@/types/document"
 
 type EventRequest = NextApiRequest & {
   query: {
