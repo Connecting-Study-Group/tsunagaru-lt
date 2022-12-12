@@ -1,14 +1,16 @@
-import { useEventList } from "../api/getEventList";
-import React from "react";
-import Link from "next/link";
-import DocumentList from "./DocumentList";
-import { useEventListData } from "../hooks/useEventListData";
-import { Flex, Paper, Stack } from "@mantine/core";
-import { PageTitle } from "@/components/PageTitle";
+import { Flex, Paper, Stack } from "@mantine/core"
+import Link from "next/link"
+import React from "react"
+
+import { PageTitle } from "@/components/PageTitle"
+
+import { useEventList } from "../api/getEventList"
+import { useEventListData } from "../hooks/useEventListData"
+import DocumentList from "./DocumentList"
 
 export const EventList = () => {
-  const { data, isLoading } = useEventList({});
-  const { eventCollectionKeys } = useEventListData(data);
+  const { data, isLoading } = useEventList({})
+  const { eventCollectionKeys } = useEventListData(data)
   // ローディング
   if (isLoading) {
     return (
@@ -16,7 +18,7 @@ export const EventList = () => {
         <PageTitle>勉強会一覧</PageTitle>
         <span>loading...</span>
       </>
-    );
+    )
   }
   // データ0件
   if (data && !Object.keys(data).length) {
@@ -25,7 +27,7 @@ export const EventList = () => {
         <PageTitle>勉強会一覧</PageTitle>
         <span>no data</span>
       </>
-    );
+    )
   }
   return (
     <>
@@ -46,5 +48,5 @@ export const EventList = () => {
         ))}
       </Stack>
     </>
-  );
-};
+  )
+}

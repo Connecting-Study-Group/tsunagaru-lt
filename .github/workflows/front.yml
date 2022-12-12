@@ -1,0 +1,21 @@
+name: front
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/cache@v3
+        id: cache_node_modules
+        with:
+          path: "**/node_modules"
+          key: node_modules-${{ hashFiles('**/package.json', 'yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+        if: steps.cache_node_modules.outputs.cache-hit != 'true'
+      - run: yarn prettier --check './src/**/*.{ts,tsx,js}'
+      - run: yarn eslint './src/**/*.{ts,tsx,js}'
+      - run: yarn build

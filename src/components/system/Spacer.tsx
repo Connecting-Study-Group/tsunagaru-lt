@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { Box } from "@mantine/core";
+import { Box } from "@mantine/core"
+import React, { memo } from "react"
 
 export const Spacer = memo(() => {
   return (
@@ -10,5 +10,5 @@ export const Spacer = memo(() => {
         placeSelf: "stretch",
       }}
     ></Box>
-  );
-});
+  )
+})

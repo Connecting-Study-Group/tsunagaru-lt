@@ -1,47 +1,41 @@
-import React, { memo, useState, useMemo } from "react";
-import {
-  TextInput,
-  Input,
-  Button,
-  Group,
-  Select,
-  SegmentedControl,
-  Box,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/router";
-import { FileWithPath } from "@mantine/dropzone";
-import EmojiInput from "@/features/documents/components/EmojiInput";
-import DocumentInput from "@/features/documents/components/DocumentInput";
-import { useEventList } from "@/features/events/api/getEventList";
-import { DocumentDetailCreateRequest, FileType, FormValues } from "../types";
-import { useCreateDocument } from "../api/createDocument";
-import { useRouterQuery } from "@/hooks/useRouterQuery";
-import { PageTitle } from "@/components/PageTitle";
+import { TextInput, Input, Button, Group, Select, SegmentedControl, Box } from "@mantine/core"
+import { FileWithPath } from "@mantine/dropzone"
+import { useForm } from "@mantine/form"
+import { useRouter } from "next/router"
+import React, { memo, useState, useMemo } from "react"
+
+import { PageTitle } from "@/components/PageTitle"
+import DocumentInput from "@/features/documents/components/DocumentInput"
+import EmojiInput from "@/features/documents/components/EmojiInput"
+import { useEventList } from "@/features/events/api/getEventList"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouterQuery } from "@/hooks/useRouterQuery"
+
+import { useCreateDocument } from "../api/createDocument"
+import { DocumentDetailCreateRequest, FileType, FormValues } from "../types"
 
 export const Form = memo(() => {
-  const { data } = useEventList({});
-  const router = useRouter();
-  const eventId = useRouterQuery("eventId");
-  const [documentType, setDocumentType] = useState("file");
-  const { user } = useAuth();
-  const [file, setFile] = useState("");
-  const [files, setFiles] = useState<FileWithPath[]>([]);
-  const [fileType, setFileType] = useState<FileType>("");
-  const mutation = useCreateDocument({});
+  const { data } = useEventList({})
+  const router = useRouter()
+  const eventId = useRouterQuery("eventId")
+  const [documentType, setDocumentType] = useState("file")
+  const { user } = useAuth()
+  const [file, setFile] = useState("")
+  const [files, setFiles] = useState<FileWithPath[]>([])
+  const [fileType, setFileType] = useState<FileType>("")
+  const mutation = useCreateDocument({})
   const eventCollectionList = useMemo(() => {
-    const list = [];
+    const list = []
     if (data) {
       for (const event in data) {
         list.push({
           value: event,
           label: `${event}開催`,
-        });
+        })
       }
     }
-    return list;
-  }, [data]);
+    return list
+  }, [data])
   const form = useForm({
     initialValues: {
       files,
@@ -51,27 +45,23 @@ export const Form = memo(() => {
       emoji: "",
     },
     validate: {
-      files: (value) =>
-        typeof value !== "object" && documentType === "file"
-          ? "必須項目です"
-          : null,
+      files: (value) => (typeof value !== "object" && documentType === "file" ? "必須項目です" : null),
       url: (value) => {
         if (documentType === "url") {
           if (!value.length) {
-            return "必須項目です";
+            return "必須項目です"
           }
-          let regexp =
-            /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g;
+          let regexp = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g
           if (!regexp.test(value)) {
-            return "URLの形式で入力してください";
+            return "URLの形式で入力してください"
           }
         }
-        return null;
+        return null
       },
       title: (value) => (!!value.trim().length ? null : "必須項目です"),
       emoji: (value) => (!!value.trim().length ? null : "必須項目です"),
     },
-  });
+  })
   const handleSubmit = (values: FormValues) => {
     const req: DocumentDetailCreateRequest = {
       title: values.title,
@@ -85,20 +75,20 @@ export const Form = memo(() => {
       user_id: user?.id || "",
       emoji: values.emoji,
       target_event: eventId,
-    };
+    }
     mutation.mutate(req, {
       onSuccess: () => {
         // 成功時
-        router.push(`/events/${eventId}`);
+        router.push(`/events/${eventId}`)
       },
       onError: (error) => {
         // 失敗時
-        console.error(error);
+        console.error(error)
       },
-    });
-  };
+    })
+  }
   // 勉強会のデータが0件の場合
-  if (!eventCollectionList.length) return <PageTitle>資料の投稿</PageTitle>;
+  if (!eventCollectionList.length) return <PageTitle>資料の投稿</PageTitle>
   return (
     <>
       <PageTitle>資料の投稿</PageTitle>
@@ -114,10 +104,7 @@ export const Form = memo(() => {
           {...form.getInputProps("eventId")}
         />
         {/* LT資料 */}
-        <Input.Wrapper
-          label="資料"
-          description="ファイルか、URLで入力してください"
-        >
+        <Input.Wrapper label="資料" description="ファイルか、URLで入力してください">
           <SegmentedControl
             value={documentType}
             onChange={setDocumentType}
@@ -151,12 +138,7 @@ export const Form = memo(() => {
           />
         </Input.Wrapper>
         {/* 表示タイトル */}
-        <TextInput
-          label="表示タイトル"
-          withAsterisk
-          required
-          {...form.getInputProps("title")}
-        />
+        <TextInput label="表示タイトル" withAsterisk required {...form.getInputProps("title")} />
         {/* アイキャッチ絵文字 */}
         <EmojiInput form={form} />
         <Group position="right" mt="md">
@@ -166,5 +148,5 @@ export const Form = memo(() => {
         </Group>
       </form>
     </>
-  );
-});
+  )
+})

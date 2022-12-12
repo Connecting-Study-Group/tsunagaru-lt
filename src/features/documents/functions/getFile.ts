@@ -1,10 +1,10 @@
-import { CONTENTFUL_BASE_INFO } from "@/constants";
-import client from "@/lib/contentful";
-import { MIME_TYPES } from "@mantine/dropzone";
-import { Asset } from "contentful-management";
+import { Asset } from "contentful-management"
+
+import { CONTENTFUL_BASE_INFO } from "@/constants"
+import client from "@/lib/contentful"
 
 export interface GetFileFromContentfulParams {
-  id: string;
+  id: string
 }
 
 /**
@@ -13,16 +13,14 @@ export interface GetFileFromContentfulParams {
  * @param {GetFileFromContentfulParams} params
  * @returns {Promise<Asset>}
  */
-export const getFileFromContentful = async (
-  params: GetFileFromContentfulParams
-): Promise<Asset> => {
+export const getFileFromContentful = async (params: GetFileFromContentfulParams): Promise<Asset> => {
   // ファイルのアップロード
   const asset = await client
     .getSpace(CONTENTFUL_BASE_INFO.space)
     .then((space) => space.getEnvironment(CONTENTFUL_BASE_INFO.environment))
     .then((environment) => environment.getAsset(params.id))
     .then((asset) => {
-      return asset;
-    });
-  return asset;
-};
+      return asset
+    })
+  return asset
+}

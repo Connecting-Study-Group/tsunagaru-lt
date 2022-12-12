@@ -1,5 +1,5 @@
 class SystemHelper {
-  public static isBrowser = typeof window !== "undefined";
+  public static isBrowser = typeof window !== "undefined"
 }
 
-export default SystemHelper;
+export default SystemHelper
